@@ -1,0 +1,10 @@
+{
+"url-backend": "127.0.0.1",
+"port": 9999,
+
+"data-db-connection":"mongodb+srv://RegistraduriaDB:RegistraduriaDB@cluster0.woiget9.mongodb.net/db-registraduria?retryWrites=true&w=majority",
+"name-db":"db-registraduria"
+
+}
+
+
