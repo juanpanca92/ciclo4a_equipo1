@@ -18,8 +18,8 @@ class ControladorMesa():
 
     def update(self,id,infoMesa):
         MesaActual = Mesa(self.repositorioMesa.findById(id))
-        MesaActual.id = infoMesa["Numero de la mesa"]
-        MesaActual.cant_cedulas_inscritas = infoMesa["Cantidad de cedulas inscritas"]
+        MesaActual.numero = infoMesa["numero"]
+        MesaActual.cant_cedulas_inscritas = infoMesa["cant_cedulas_inscritas"]
         return self.repositorioMesa.save(MesaActual)
 
     def delete(self,id):
