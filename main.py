@@ -145,7 +145,7 @@ def ResultadosCandidato(id_candidato):
     json =miControladorResultados.listarResultadosCandidato(id_candidato)
     return jsonify(json)
 
-@app.route("/resultados/suma_votos/candidato/<string:id_candidato>" ,methods=['GET'])
+@app.route("/resultados/suma_votos/candidatos/<string:id_candidato>" ,methods=['GET'])
 def getSumaVotosPorCandidato(id_candidato):
     json =miControladorResultados.sumarVotosPorCandidato (id_candidato)
     return jsonify(json)
