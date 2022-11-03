@@ -99,6 +99,7 @@ class InterfaceRepositorio(Generic[T]):
         keys = x.keys()
         for k in keys:
             if isinstance(x[k], DBRef):
+
                 laColeccion = self.baseDatos[x[k].collection]
                 valor = laColeccion.find_one({"_id": ObjectId(x[k].id)})
                 valor["_id"] = valor["_id"].__str__()

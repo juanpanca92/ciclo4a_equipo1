@@ -11,7 +11,7 @@ class ControladorCandidato():
         return self.repositorioCandidato.findAll()
 
     def create(self,infoCandidato):
-        nuevoCandidato = Candidato(infoCandidato)
+        nuevoCandidato=Candidato(infoCandidato)
         return self.repositorioCandidato.save(nuevoCandidato)
 
     def show(self,id):
@@ -19,14 +19,14 @@ class ControladorCandidato():
         return elCandidato.__dict__
 
     def update(self,id,infoCandidato):
-        candidatoActual = Candidato(self.repositorioCandidato.findById(id))
+        candidatoActual=Candidato(self.repositorioCandidato.findById(id))
         candidatoActual.numero = infoCandidato["numero"]
         candidatoActual.resolucion = infoCandidato["resolucion"]
         candidatoActual.cedula = infoCandidato["cedula"]
-        candidatoActual.nombre = infoCandidato["nombre"]
+        candidatoActual.nombre=infoCandidato["nombre"]
         candidatoActual.apellido = infoCandidato["apellido"]
+        candidatoActual.partido = infoCandidato["partido"]
         return self.repositorioCandidato.save(candidatoActual)
-
     def delete(self,id):
         return self.repositorioCandidato.delete(id)
 
