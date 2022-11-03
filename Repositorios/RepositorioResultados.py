@@ -1,25 +1,28 @@
-from Repositorios.InterfaceRepositorio import InterfaceRepositorio
-from Modelos.Resultados import Resultados
-
 from bson import ObjectId
+from Repositorios.InterfaceRepositorio import InterfaceRepositorio
+from Modelos.Resultados import Resultado
+class RepositorioResultados(InterfaceRepositorio[Resultado]):
+    pass
 
-class RepositorioResultados(InterfaceRepositorio[Resultados]):
-
-    def getListadoResultadosCandidato(self, id_candidato):
+    def getListadoResultadosPorCandidato(self,id_candidato):
         theQuery = {"candidato.$id": ObjectId(id_candidato)}
         return self.query(theQuery)
 
-    def sumaVotosporCandidato(self,id_candidato):
-        query1 = {
-          "$match": {"candidato.$id": ObjectId(id_candidato)}
-        }
-        query2 = {
-          "$group": {
-            "_id": "$candidato",
-            "suma": {
-              "$sum": "$conteo_final"
-            }
-          }
-        }
-        pipeline = [query1,query2]
+    def getListadoResultadosPorMesa(self,id_mesa):
+        theQuery = {"mesa.$id":ObjectId(id_mesa)}
+        return self.query(theQuery)
+
+    def getMayorVotacionPorCandidato(self):
+        query1={
+                "$group":{
+                        "_id":"$candidato",
+                        "total_votos ":{
+                            "$count":{}
+                        }
+
+                    }
+                }
+        pipeline= [query1]
         return self.queryAggregation(pipeline)
+
+

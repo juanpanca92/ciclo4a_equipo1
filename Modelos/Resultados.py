@@ -1,4 +1,4 @@
-from Modelos.abstractModelo import AbstractModelo
+from Modelos.AbstractModelo import AbstractModelo
 
-class Resultados(AbstractModelo):
+class Resultado(AbstractModelo):
     pass
