@@ -1,0 +1,13 @@
+sprint1\seguridadBE\Controladores\ControladorPermisosRoles.class
+sprint1\seguridadBE\Modelos\Usuario.class
+sprint1\seguridadBE\Repositorios\RepositorioRol.class
+sprint1\seguridadBE\Controladores\ControladorPermiso.class
+sprint1\seguridadBE\Repositorios\RepositorioPermisosRoles.class
+sprint1\seguridadBE\Repositorios\RepositorioPermiso.class
+sprint1\seguridadBE\Controladores\ControladorUsuario.class
+sprint1\seguridadBE\SeguridadBeApplication.class
+sprint1\seguridadBE\Controladores\ControladorRol.class
+sprint1\seguridadBE\Modelos\Rol.class
+sprint1\seguridadBE\Repositorios\RepositorioUsuario.class
+sprint1\seguridadBE\Modelos\PermisosRoles.class
+sprint1\seguridadBE\Modelos\Permiso.class
