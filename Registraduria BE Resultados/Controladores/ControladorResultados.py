@@ -32,10 +32,30 @@ class ControladorResultados():
         return self.repositorioResultados.delete(id)
     def listarResultadosCandidatos(self,id_candidato):
         return self.repositorioResultados.getListadoResultadosPorCandidato(id_candidato)
-    def listarResultadosPorMesa(self,id_mesa):
-        return self.repositorioResultados.getListadoResultadosPorMesa(id_mesa)
+
     def ganadorElecciones(self):
         return self.repositorioResultados.getVotacionMasAlta()
 
     def listaConsolidadosMesas(self):
-        return self.repositorioResultados.consolidadoMesas()
+        return self.repositorioResultados.consolidadoMesas()#total de votos por mesa
+
+    def listaDelTutorControlador(self):
+        return self.repositorioResultados.VotosCandidatoPartido()
+
+    def elConsolidador2(self):
+        return self.repositorioResultados.consolidadoMesas2()
+    def elPuntoC(self):
+        return  self.repositorioResultados.puntoC()
+
+    def listarpartidosOrdenadosPorVotos(self):
+        return self.repositorioResultados.partidosOrdenadosPorVotos()
+    def listarPorcentajeParticipacion(self):
+        return self.repositorioResultados.getPorcentajeParticipacion()
+
+    def listarPorcentualPartidos(self):
+        return self.repositorioResultados.distribucionPorcentualPartidos()
+
+    def listaVotocCandidatosMesa(self,id_mesa):
+        return self.repositorioResultados.listadoVotosCandidatoPartidosxMesa(id_mesa)
+
+    ########################################################
