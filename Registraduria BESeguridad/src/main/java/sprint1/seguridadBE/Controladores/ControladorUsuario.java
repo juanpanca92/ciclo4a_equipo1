@@ -6,6 +6,9 @@ import sprint1.seguridadBE.Repositorios.RepositorioUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -22,7 +25,7 @@ public class ControladorUsuario {
         return this.miRepositorioUsuario.findAll();
     }
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping
+@PostMapping
     public Usuario create(@RequestBody  Usuario infoUsuario){
         infoUsuario.setContrasena(convertirSHA256(infoUsuario.getContrasena()));
         return this.miRepositorioUsuario.save(infoUsuario);
@@ -47,9 +50,7 @@ public class ControladorUsuario {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("{id}")
     public void delete(@PathVariable String id){
-        Usuario usuarioActual=this.miRepositorioUsuario
-                .findById(id)
-                .orElse(null);
+        Usuario usuarioActual=this.miRepositorioUsuario.findById(id).orElse(null);
         if (usuarioActual!=null){
             this.miRepositorioUsuario.delete(usuarioActual);
         }
@@ -63,11 +64,11 @@ public class ControladorUsuario {
     @PutMapping("{id}/rol/{id_rol}")
     public Usuario asignarRolAUsuario(@PathVariable String id,@PathVariable String id_rol){
         Usuario usuarioActual=this.miRepositorioUsuario
-                                    .findById(id)
-                                    .orElse(null);
+                .findById(id)
+                .orElse(null);
         Rol rolActual=this.miRepositorioRol
-                                    .findById(id_rol)
-                                    .orElse(null);
+                .findById(id_rol)
+                .orElse(null);
         if (usuarioActual!=null && rolActual!=null){
             usuarioActual.setRol(rolActual);
             return this.miRepositorioUsuario.save(usuarioActual);
@@ -93,4 +94,20 @@ public class ControladorUsuario {
         }
         return sb.toString();
     }
+    @PostMapping("/validar")
+    public Usuario validate(@RequestBody  Usuario infoUsuario,
+                            final HttpServletResponse response) throws
+    IOException {
+        Usuario usuarioActual=this.miRepositorioUsuario
+                .getUserByEmail(infoUsuario.getCorreo());
+        if (usuarioActual!=null &&
+            usuarioActual.getContrasena().equals(convertirSHA256(infoUsuario.getContrasena()))) {
+            usuarioActual.setContrasena("");
+            return usuarioActual;
+        }else{
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+            return null;
+        }
+    }
 }
+

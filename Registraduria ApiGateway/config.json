@@ -1,0 +1,7 @@
+{
+  "url-backend": "127.0.0.1",
+  "port": 7777,
+  "url-backend-security": "http://127.0.0.1:8080",
+  "url-backend-results": "http://127.0.0.1:9999"
+}
+
