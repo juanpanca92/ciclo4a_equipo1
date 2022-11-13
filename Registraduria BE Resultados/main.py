@@ -41,8 +41,6 @@ def modificarCandidato(id):
     data = request.get_json()
     json=miControladorCandidato.update(id,data)
     return jsonify(json)
-
-
 @app.route("/candidatos/<string:id>",methods=['DELETE'])
 def eliminarCandidato(id):
     json=miControladorCandidato.delete(id)
@@ -66,17 +64,18 @@ def modificarMesa(id):
     data = request.get_json()
     json=miControladorMesa.update(id,data)
     return jsonify(json)
+@app.route("/mesas/<string:id>",methods=['DELETE'])
+def eliminarMesa(id):
+    json=miControladorMesa.delete(id)
+    return jsonify(json)
+#########################
 @app.route("/candidatos/<string:id>/partidos/<string:id_partido>" ,methods=['PUT'])
 def asignarPartidoACandidato(id,id_partido):
     json =miControladorCandidato.asignarPartido(id,id_partido)
     return jsonify(json)
 
 
-@app.route("/mesas/<string:id>",methods=['DELETE'])
-def eliminarMesa(id):
-    json=miControladorMesa.delete(id)
-    return jsonify(json)
-################################ PARTIDO ###################################################
+####### PARTIDO ###################################################
 @app.route("/partidos",methods=['GET'])
 def getPartidos():
     json=miControladorPartido.index()
@@ -140,28 +139,28 @@ def getVotosMayores():
     json=miControladorResultados.ganadorElecciones()
     return jsonify(json)
 
-@app.route("/consolidadomesas",methods=['GET'])#json con el id de la mesa y sus votos
+@app.route("/resultados/consolidadomesas",methods=['GET'])#json con el id de la mesa y sus votos
 def getTotalVotosMesas():
     json=miControladorResultados.listaConsolidadosMesas()
     return jsonify(json)
-@app.route("/TodosLosResultados",methods=['GET'])#json nombre, apellidos del candidato partido y sus votos en todas las mesas
+@app.route("/resultados/TodosLosResultados",methods=['GET'])#json nombre, apellidos del candidato partido y sus votos en todas las mesas
 def getTodosLosResultados():
     json=miControladorResultados.listaDelTutorControlador()
     return jsonify(json)
-@app.route("/consolidadoMesas2",methods=['GET'])#json con idmesa, doc(candidato) y mesa y su total de votos
+@app.route("/resultados/consolidadoMesas2",methods=['GET'])#json con idmesa, doc(candidato) y mesa y su total de votos
 def getConsolidado2():
     json=miControladorResultados.elConsolidador2()
     return jsonify(json)
-@app.route("/votosPartido",methods=['GET'])
+@app.route("/resultados/votosPartido",methods=['GET'])
 def getVotosPartido():
     json=miControladorResultados.elPuntoC()
     return jsonify(json)
 
-@app.route("/ListadoPartidosOrdenadosVotos",methods=['GET'])
+@app.route("/resultados/ListadoPartidosOrdenadosVotos",methods=['GET'])
 def getListadoPartidosOrdenadosPorVotos():
     json=miControladorResultados.listarpartidosOrdenadosPorVotos()
     return jsonify(json)
-@app.route("/porcentajeParticipacion",methods=['GET'])
+@app.route("/resultados/porcentajeParticipacion",methods=['GET'])
 def getPorcentajeParticipacion():
     json=miControladorResultados.listarPorcentajeParticipacion()
     return jsonify(json)
@@ -176,8 +175,8 @@ def listaVotosCandidatosMesas(id_mesa):
     json=miControladorResultados.listaVotocCandidatosMesa(id_mesa)
     return jsonify(json)
 
-############################# mfdc2####################################################
-################################################################################################
+#############################     mfdc3     ####################################################
+#############################continuar trabajando, esta copia está en el repositorio ###########
 def loadFileConfig():
     with open('config.json') as f:
         data = json.load(f)

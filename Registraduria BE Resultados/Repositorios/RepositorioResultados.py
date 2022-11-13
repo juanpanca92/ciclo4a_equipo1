@@ -30,7 +30,7 @@ class RepositorioResultados(InterfaceRepositorio[Resultado]):
             Stra= str(a)
             part.append("Partido : "+i)
             part.append("Votos   : "+Stra)
-            print(part)
+
             enOrden.append(part)
         return Ordenado
 
@@ -49,7 +49,7 @@ class RepositorioResultados(InterfaceRepositorio[Resultado]):
                 listaPartidos.append(idPartido)
                 diccPartidos[nombPartido] = 1
         Ordenado = dict(sorted(diccPartidos.items(), key=lambda item: item[1], reverse=True))
-        print(Ordenado)
+
         # sacar los porcentajes de cada partido |
         def porcentajevotos(total, votos):
             result = (votos / total) * 100
@@ -99,12 +99,10 @@ class RepositorioResultados(InterfaceRepositorio[Resultado]):
         for i in diccPartidos:
             diccPartidos[i] = round(diccPartidos[i] / 15 * 100, 1)
         Ordenado = sorted(diccPartidos.items(), key=operator.itemgetter(1), reverse=True)
-
         return Ordenado
     def getListadoResultadosPorCandidato(self,id_candidato):
         theQuery = {"candidato.$id": ObjectId(id_candidato)}
         return self.query(theQuery)
-
     def getVotacionMasAlta(self):
         query1={
             "$group": {
@@ -119,16 +117,15 @@ class RepositorioResultados(InterfaceRepositorio[Resultado]):
         }
         pipeline = [query1]
         lista = self.queryAggregation(pipeline)
-
         maximo = 0
-        candidatos = []
+        candidatos = ["Candidato con la votacion mas alta"]
         for candidatoConTodo in lista:
             t = candidatoConTodo["Total_votos"]
-            print(t)
             if t > maximo:
                maximo = t
         for candidatoConTodo in lista:
             votos = candidatoConTodo["Total_votos"]
+            Strvotos= str(votos)
             if votos == maximo:
                 resultado = []
                 candidato = candidatoConTodo.get("doc")
@@ -136,10 +133,9 @@ class RepositorioResultados(InterfaceRepositorio[Resultado]):
                 nombre = elem.get("nombre")
                 apellido = elem.get("apellido")
                 nombrecompleto = nombre + " " + apellido
-                resultado.append(nombrecompleto)
-                resultado.append(votos)
+                resultado.append("Nombre : "+nombrecompleto)
+                resultado.append("Votos  : "+Strvotos)
                 candidatos.append(resultado)
-        print (candidatos)
         return candidatos
     def consolidadoMesas(self):#punto b
         query ={"$group":{"_id":"$mesa","total_votos ":{"$count":{}},"doc":{"$first":"$$ROOT"}}}
@@ -164,7 +160,6 @@ class RepositorioResultados(InterfaceRepositorio[Resultado]):
         pipeline = [query1,query2]
         lista = self.queryAggregation(pipeline)
         listadoGeneral = sorted(lista, key=lambda votos: votos['suma'],reverse=True)#manipular listadoGeneral
-        print("listadoGeneral =",listadoGeneral)
         listadoVotos=["Punto a listado de todos los candidatos con info, ordenados por votacion"]
         for candidatoConTodo in listadoGeneral:
             resultado=[]
@@ -182,11 +177,6 @@ class RepositorioResultados(InterfaceRepositorio[Resultado]):
             resultado.append("Partido   : "+nombrePartido)
             listadoVotos.append(resultado)
         return listadoVotos
-
-
-
-
-
     ######################################################################################################################
     """Listado de lo votos obtenidos por todos los candidatos con el nombre del partido politico ordenados de mayor a menor"""
     def consolidadoMesas2(self):
@@ -195,7 +185,6 @@ class RepositorioResultados(InterfaceRepositorio[Resultado]):
         lista = self.queryAggregation(pipeline)
         ordenados = sorted(lista, key=lambda votos: votos['total_votos '],reverse=True)
         return ordenados
-
     def listadoVotosCandidatoPartidosxMesa(self, id_mesa):
         query1 = {
             "$match": {"mesa.$id": ObjectId(id_mesa)}
@@ -215,7 +204,7 @@ class RepositorioResultados(InterfaceRepositorio[Resultado]):
         lista = self.queryAggregation(pipeline)
         ordenado = sorted(lista, key=lambda votos: votos['Total_votos'], reverse=True)
         listadoVotos = []
-        for candidatoConTodo in lista:
+        for candidatoConTodo in ordenado:
             resultado = []
             votosCandidato = candidatoConTodo.get("Total_votos")  # obtener los votos
             StrvotosCandidato = str(votosCandidato)
